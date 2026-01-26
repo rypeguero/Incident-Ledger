@@ -1,0 +1,35 @@
+'use client';
+
+const categories = [
+  { id: 'software', name: 'Software Development', icon: '💻' },
+  { id: 'building', name: 'Building Management', icon: '🏢' },
+  { id: 'custodial', name: 'Custodial', icon: '🧹' },
+  { id: 'healthcare', name: 'Healthcare', icon: '🏥' },
+];
+
+export default function IncidentSidebar({ onSelectCategory, selectedCategory }: { 
+  onSelectCategory: (id: string) => void;
+  selectedCategory: string;
+}) {
+  return (
+    <aside className="fixed left-0 top-24 w-64 bg-slate-900/50 border-r border-slate-700 p-5 sm:p-6 h-[calc(100vh-6rem)] overflow-y-auto">
+      <h3 className="text-xs font-semibold text-slate-400 mb-5">WORK TYPES</h3>
+      <div className="space-y-3">
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => onSelectCategory(cat.id)}
+            className={`w-full text-left px-3 py-2.5 rounded-lg transition text-sm whitespace-nowrap ${
+              selectedCategory === cat.id
+                ? 'bg-indigo-600/20 border border-indigo-500/50 text-indigo-300'
+                : 'hover:bg-slate-800 text-slate-300 border border-transparent'
+            }`}
+          >
+            <span className="mr-2 text-sm">{cat.icon}</span>
+            {cat.name}
+          </button>
+        ))}
+      </div>
+    </aside>
+  );
+}

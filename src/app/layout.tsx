@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins, Open_Sans } from "next/font/google";
 import "./globals.css";
+import ConditionalHeader from "./components/ConditionalHeader";
+import BurgerMenu from "./components/BurgerMenu";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
+  weight: ["400", "600", "700"],
+  variable: "--font-poppins",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
 });
 
@@ -25,8 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${poppins.variable} ${openSans.variable} antialiased`}
       >
+        <BurgerMenu />
+        <ConditionalHeader />
         {children}
       </body>
     </html>
