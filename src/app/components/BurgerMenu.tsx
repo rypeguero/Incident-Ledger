@@ -80,7 +80,7 @@ export default function BurgerMenu() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className={`rounded-md px-3 py-2 text-sm font-medium transition hover:bg-slate-800 hover:text-slate-100 ${
+                    className={`rounded-md px-4 py-3.5 text-sm font-medium transition hover:bg-slate-800 hover:text-slate-100 ${
                       isActive ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-200 border border-transparent'
                     }`}
                   >

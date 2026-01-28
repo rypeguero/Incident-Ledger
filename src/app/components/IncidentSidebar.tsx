@@ -30,6 +30,23 @@ export default function IncidentSidebar({ onSelectCategory, selectedCategory }: 
           </button>
         ))}
       </div>
+
+      {/* Divider */}
+      <div className="border-t border-slate-700 my-6"></div>
+
+      {/* Concepts Section */}
+      <h3 className="text-xs font-semibold text-slate-400 mb-3">REFERENCE</h3>
+      <button
+        onClick={() => onSelectCategory('concepts')}
+        className={`w-full text-left px-3 py-2.5 rounded-lg transition text-sm whitespace-nowrap ${
+          selectedCategory === 'concepts'
+            ? 'bg-indigo-600/20 border border-indigo-500/50 text-indigo-300'
+            : 'hover:bg-slate-800 text-slate-300 border border-transparent'
+        }`}
+      >
+        <span className="mr-2 text-sm">📚</span>
+        Concepts & Examples
+      </button>
     </aside>
   );
 }

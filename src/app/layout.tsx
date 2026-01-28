@@ -31,6 +31,10 @@ export default function RootLayout({
         className={`${poppins.variable} ${openSans.variable} antialiased`}
       >
         <BurgerMenu />
+        {/* Demo Mode Disclaimer */}
+        <div className="fixed top-6 right-6 z-50 text-xs text-amber-400 font-semibold bg-amber-950/50 px-2 py-1 rounded border border-amber-700/50">
+          DEMO MODE
+        </div>
         <ConditionalHeader />
         {children}
       </body>
