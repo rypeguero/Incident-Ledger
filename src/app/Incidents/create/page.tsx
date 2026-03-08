@@ -27,7 +27,7 @@ export default function CreateIncidentPage() {
     // Handle form submission here
     console.log('Form submitted:', formData);
     
-    // Redirect after 2 seconds
+    // Redirect after 4 seconds
     setTimeout(() => {
       router.push('/Incidents');
     }, 4000);

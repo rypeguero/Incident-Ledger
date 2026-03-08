@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import IncidentSidebar from "../components/IncidentSidebar";
+import { IconBuilding, IconCode, IconHeartPulse, IconPlus, IconWrench } from "../components/Icons";
 
 // src/app/incidents/page.tsx
 type Incident = {
@@ -127,7 +128,7 @@ const categoryInfo = [
     id: "software",
     name: "Software Development",
     description: "IT infrastructure, applications, systems, and deployment issues",
-    icon: "💻",
+    Icon: IconCode,
     examples: [
       "API outages or performance degradation",
       "Build pipeline failures",
@@ -140,7 +141,7 @@ const categoryInfo = [
     id: "building",
     name: "Building Management",
     description: "Facility maintenance, HVAC, elevators, and infrastructure",
-    icon: "🏢",
+    Icon: IconBuilding,
     examples: [
       "HVAC/temperature control failures",
       "Elevator malfunctions",
@@ -153,7 +154,7 @@ const categoryInfo = [
     id: "custodial",
     name: "Custodial",
     description: "Cleaning, maintenance, supplies, and general upkeep",
-    icon: "🧹",
+    Icon: IconWrench,
     examples: [
       "Supply shortages (paper towels, soap, etc.)",
       "Spill cleanup and floor hazards",
@@ -166,7 +167,7 @@ const categoryInfo = [
     id: "healthcare",
     name: "Healthcare",
     description: "Medical equipment, patient care, and clinical issues",
-    icon: "🏥",
+    Icon: IconHeartPulse,
     examples: [
       "Medical equipment malfunction",
       "Patient monitoring issues",
@@ -177,15 +178,56 @@ const categoryInfo = [
   }
 ];
 
-export default function IncidentsPage() {
+function IncidentsPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<string>("software");
+
+  const allowedCategories = useMemo(
+    () => new Set(["software", "building", "custodial", "healthcare"]),
+    []
+  );
+
+  useEffect(() => {
+    const view = searchParams.get("view");
+    if (view === "concepts") {
+      setSelectedCategory("concepts");
+      return;
+    }
+
+    const category = searchParams.get("category");
+    if (category && allowedCategories.has(category)) {
+      setSelectedCategory(category);
+      return;
+    }
+
+    if (!category) {
+      setSelectedCategory("software");
+    }
+  }, [allowedCategories, searchParams]);
+
+  const handleSelectCategory = (id: string) => {
+    setSelectedCategory(id);
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (id === "concepts") {
+      params.delete("category");
+      params.set("view", "concepts");
+    } else {
+      params.delete("view");
+      params.set("category", id);
+    }
+
+    const qs = params.toString();
+    router.replace(qs ? `/Incidents?${qs}` : "/Incidents");
+  };
 
   return (
     <main className="min-h-screen bg-slate-950 text-white px-6 py-12 pl-72">
       <IncidentSidebar
         selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={handleSelectCategory}
       />
       <div className="container mx-auto max-w-5xl">
         <div className="space-y-8">
@@ -210,7 +252,7 @@ export default function IncidentsPage() {
               aria-label="Create new incident"
               className="ml-auto inline-flex items-center gap-2 rounded-full bg-indigo-600 text-white font-semibold px-6 py-3 shadow-lg shadow-indigo-600/30 hover:bg-indigo-500 transition-colors border border-indigo-400/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
             >
-              <span className="text-xl leading-none">＋</span>
+              <IconPlus className="h-5 w-5" />
               <span>New Incident</span>
             </button>
           )}
@@ -225,7 +267,7 @@ export default function IncidentsPage() {
         className="rounded-xl border border-slate-800 bg-slate-900/60 p-6 shadow-lg hover:shadow-xl hover:border-slate-700 transition-all"
       >
         <div className="flex items-start gap-3 mb-4">
-          <span className="text-3xl">{category.icon}</span>
+          <category.Icon className="h-8 w-8 text-indigo-300" />
           <div>
             <h2 className="text-xl font-semibold">{category.name}</h2>
             <p className="text-xs text-slate-400 mt-1">{category.description}</p>
@@ -278,4 +320,20 @@ export default function IncidentsPage() {
     </div>
   </main>
 );
+}
+
+export default function IncidentsPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-slate-950 text-white px-6 py-12 pl-72">
+          <div className="container mx-auto max-w-5xl">
+            <p className="text-sm text-slate-400">Loading…</p>
+          </div>
+        </main>
+      }
+    >
+      <IncidentsPageContent />
+    </Suspense>
+  );
 }

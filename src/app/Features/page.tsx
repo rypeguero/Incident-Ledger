@@ -1,3 +1,13 @@
+import {
+  IconChartBars,
+  IconClipboard,
+  IconDocumentText,
+  IconLock,
+  IconSearch,
+  IconTag,
+  IconTarget,
+} from "../components/Icons";
+
 export default function FeaturesPage() {
   return (
     <main className="min-h-screen bg-slate-950 text-white px-6 py-16">
@@ -13,7 +23,7 @@ export default function FeaturesPage() {
           {/* Feature 1 */}
           <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition">
             <div className="flex items-start gap-4">
-              <span className="text-4xl">📋</span>
+              <IconClipboard className="h-10 w-10 text-indigo-300" />
               <div>
                 <h2 className="text-2xl font-semibold mb-2">Comprehensive Incident Logging</h2>
                 <p className="text-slate-300">
@@ -28,7 +38,7 @@ export default function FeaturesPage() {
           {/* Feature 2 */}
           <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition">
             <div className="flex items-start gap-4">
-              <span className="text-4xl">🔍</span>
+              <IconSearch className="h-10 w-10 text-indigo-300" />
               <div>
                 <h2 className="text-2xl font-semibold mb-2">Track Actions & Results</h2>
                 <p className="text-slate-300">
@@ -42,7 +52,7 @@ export default function FeaturesPage() {
           {/* Feature 3 */}
           <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition">
             <div className="flex items-start gap-4">
-              <span className="text-4xl">📊</span>
+              <IconChartBars className="h-10 w-10 text-indigo-300" />
               <div>
                 <h2 className="text-2xl font-semibold mb-2">Status Management</h2>
                 <p className="text-slate-300">
@@ -56,7 +66,7 @@ export default function FeaturesPage() {
           {/* Feature 4 */}
           <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition">
             <div className="flex items-start gap-4">
-              <span className="text-4xl">📄</span>
+              <IconDocumentText className="h-10 w-10 text-indigo-300" />
               <div>
                 <h2 className="text-2xl font-semibold mb-2">Export Clean Reports</h2>
                 <p className="text-slate-300">
@@ -71,7 +81,7 @@ export default function FeaturesPage() {
           {/* Feature 5 */}
           <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition">
             <div className="flex items-start gap-4">
-              <span className="text-4xl">🏷️</span>
+              <IconTag className="h-10 w-10 text-indigo-300" />
               <div>
                 <h2 className="text-2xl font-semibold mb-2">Multi-Category Support</h2>
                 <p className="text-slate-300">
@@ -86,7 +96,7 @@ export default function FeaturesPage() {
           {/* Feature 6 */}
           <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition">
             <div className="flex items-start gap-4">
-              <span className="text-4xl">🔐</span>
+              <IconLock className="h-10 w-10 text-indigo-300" />
               <div>
                 <h2 className="text-2xl font-semibold mb-2">Authentication & Security</h2>
                 <p className="text-slate-300">
@@ -101,7 +111,7 @@ export default function FeaturesPage() {
           {/* Feature 7 */}
           <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition">
             <div className="flex items-start gap-4">
-              <span className="text-4xl">🎯</span>
+              <IconTarget className="h-10 w-10 text-indigo-300" />
               <div>
                 <h2 className="text-2xl font-semibold mb-2">Purpose-Built for Accountability</h2>
                 <p className="text-slate-300">

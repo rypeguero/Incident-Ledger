@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { IconLink, IconMail } from '../components/Icons';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -133,7 +134,7 @@ export default function ContactPage() {
               <h2 className="text-2xl font-semibold mb-4">Connect</h2>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">💻</span>
+                  <IconLink className="h-6 w-6 text-indigo-300" />
                   <div>
                     <p className="text-sm text-slate-400">GitHub</p>
                     <a
@@ -148,7 +149,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">📧</span>
+                  <IconMail className="h-6 w-6 text-indigo-300" />
                   <div>
                     <p className="text-sm text-slate-400">Email</p>
                     <p className="text-slate-200">Use the form to reach out</p>

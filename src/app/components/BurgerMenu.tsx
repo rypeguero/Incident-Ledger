@@ -11,6 +11,7 @@ type NavLink = {
 
 const links: NavLink[] = [
   { label: 'Home', href: '/' },
+  { label: 'Dashboard', href: '/Admin' },
   { label: 'Incidents', href: '/Incidents' },
   { label: 'Features', href: '/Features' },
   { label: 'Contact', href: '/Contact' },
@@ -49,39 +50,51 @@ export default function BurgerMenu() {
     <div className="fixed top-6 left-6 z-50" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex flex-col p-2 hover:bg-slate-800 rounded transition outline-none focus:outline-none ${isOpen ? 'gap-0' : 'gap-1.5'}`}
+        className="flex items-center gap-2 p-2 hover:bg-slate-800 rounded transition outline-none focus:outline-none"
         aria-label="Toggle menu"
         aria-expanded={isOpen}
       >
-        <div
-          className={`w-6 h-0.5 bg-white transition-all duration-300 origin-center ${isOpen ? 'rotate-45 translate-y-[1px] absolute' : ''}`}
-          style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))' }}
-        ></div>
+        <span
+          className={`relative flex flex-col justify-center ${
+            isOpen ? 'gap-0' : 'gap-1.5'
+          }`}
+        >
+          <span
+            className={`w-6 h-0.5 bg-white transition-all duration-300 origin-center ${isOpen ? 'rotate-45 translate-y-[1px] absolute' : ''}`}
+            style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))' }}
+          />
 
-        <div
-          className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? 'hidden' : ''}`}
-          style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))' }}
-        ></div>
+          <span
+            className={`w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}
+            style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))' }}
+          />
 
-        <div
-          className={`w-6 h-0.5 bg-white transition-all duration-300 origin-center ${isOpen ? '-rotate-45 -translate-y-[1px] absolute' : ''}`}
-          style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))' }}
-        ></div>
+          <span
+            className={`w-6 h-0.5 bg-white transition-all duration-300 origin-center ${isOpen ? '-rotate-45 -translate-y-[1px] absolute' : ''}`}
+            style={{ filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))' }}
+          />
+        </span>
+
+        <span className="text-sm font-semibold text-slate-200">Menu</span>
       </button>
 
       {isOpen && (
         <>
           <div className="absolute left-0 mt-4 w-56 bg-slate-900/95 border border-slate-700 rounded-lg shadow-xl backdrop-blur-sm z-50">
-            <nav className="flex flex-col p-4 space-y-2">
+            <nav className="flex w-full flex-col items-stretch p-4 space-y-2">
               {links.map((link) => {
-                const isActive = link.href !== '#' && pathname === link.href;
+                const isActive =
+                  link.href !== '#' &&
+                  (link.href === '/' ? pathname === '/' : pathname === link.href || pathname.startsWith(`${link.href}/`));
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className={`rounded-md px-4 py-3.5 text-sm font-medium transition hover:bg-slate-800 hover:text-slate-100 ${
-                      isActive ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-200 border border-transparent'
+                    className={`flex w-full items-center justify-start rounded-md px-4 py-3.5 text-left text-sm font-medium transition-colors ${
+                      isActive
+                        ? 'bg-slate-800 text-white border border-slate-700'
+                        : 'text-slate-200 border border-transparent hover:bg-slate-800 hover:text-slate-100 hover:border-slate-600/60'
                     }`}
                   >
                     {link.label}

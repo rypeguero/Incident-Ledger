@@ -14,9 +14,9 @@ export default function ConditionalHeader() {
   return (
     <>
       {/* Background for header */}
-      <div className="fixed top-0 left-0 right-0 h-24 bg-slate-950 z-30"></div>
+      <div className="fixed top-0 left-0 right-0 h-24 bg-slate-950 z-20 pointer-events-none"></div>
       
-      <div className="fixed -top-10 left-20 z-50">
+      <div className="fixed -top-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
         <Image
           src="/Images/headerlogo.png"
           alt="Incident Ledger header logo"
@@ -31,7 +31,7 @@ export default function ConditionalHeader() {
       </div>
       
       {/* Divider line */}
-      <div className="fixed top-24 left-0 right-0 z-40">
+      <div className="fixed top-24 left-0 right-0 z-20 pointer-events-none">
         <div className="h-1 bg-gradient-to-r from-transparent via-slate-700 to-transparent" 
              style={{
                boxShadow: '0 0 8px rgba(148, 163, 184, 0.3)',

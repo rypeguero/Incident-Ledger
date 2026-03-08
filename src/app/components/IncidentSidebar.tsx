@@ -1,10 +1,12 @@
 'use client';
 
+import { IconBook, IconBuilding, IconCode, IconHeartPulse, IconWrench } from './Icons';
+
 const categories = [
-  { id: 'software', name: 'Software Development', icon: '💻' },
-  { id: 'building', name: 'Building Management', icon: '🏢' },
-  { id: 'custodial', name: 'Custodial', icon: '🧹' },
-  { id: 'healthcare', name: 'Healthcare', icon: '🏥' },
+  { id: 'software', name: 'Software Development', Icon: IconCode },
+  { id: 'building', name: 'Building Management', Icon: IconBuilding },
+  { id: 'custodial', name: 'Custodial', Icon: IconWrench },
+  { id: 'healthcare', name: 'Healthcare', Icon: IconHeartPulse },
 ];
 
 export default function IncidentSidebar({ onSelectCategory, selectedCategory }: { 
@@ -25,7 +27,7 @@ export default function IncidentSidebar({ onSelectCategory, selectedCategory }: 
                 : 'hover:bg-slate-800 text-slate-300 border border-transparent'
             }`}
           >
-            <span className="mr-2 text-sm">{cat.icon}</span>
+            <cat.Icon className="mr-2 inline-block h-4 w-4 text-indigo-200/90" />
             {cat.name}
           </button>
         ))}
@@ -44,7 +46,7 @@ export default function IncidentSidebar({ onSelectCategory, selectedCategory }: 
             : 'hover:bg-slate-800 text-slate-300 border border-transparent'
         }`}
       >
-        <span className="mr-2 text-sm">📚</span>
+        <IconBook className="mr-2 inline-block h-4 w-4 text-indigo-200/90" />
         Concepts & Examples
       </button>
     </aside>
