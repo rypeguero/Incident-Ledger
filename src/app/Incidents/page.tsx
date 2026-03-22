@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import IncidentSidebar from "../components/IncidentSidebar";
 import { IconBuilding, IconCode, IconHeartPulse, IconPlus, IconWrench } from "../components/Icons";
@@ -181,34 +181,27 @@ const categoryInfo = [
 function IncidentsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState<string>("software");
 
   const allowedCategories = useMemo(
     () => new Set(["software", "building", "custodial", "healthcare"]),
     []
   );
 
-  useEffect(() => {
+  const selectedCategory = useMemo(() => {
     const view = searchParams.get("view");
     if (view === "concepts") {
-      setSelectedCategory("concepts");
-      return;
+      return "concepts";
     }
 
     const category = searchParams.get("category");
     if (category && allowedCategories.has(category)) {
-      setSelectedCategory(category);
-      return;
+      return category;
     }
 
-    if (!category) {
-      setSelectedCategory("software");
-    }
+    return "software";
   }, [allowedCategories, searchParams]);
 
   const handleSelectCategory = (id: string) => {
-    setSelectedCategory(id);
-
     const params = new URLSearchParams(searchParams.toString());
 
     if (id === "concepts") {
