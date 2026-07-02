@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/app/lib/supabase';
+import { query } from '@/app/lib/db';
 
 const validCategories = ['software', 'building', 'custodial', 'healthcare'] as const;
 const validUrgencies = ['low', 'medium', 'high', 'critical'] as const;
@@ -18,32 +18,38 @@ type IncidentRequestBody = {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const category = searchParams.get('category');
+  const category = searchParams.get('category')?.trim().toLowerCase();
 
-  // Reuse one query path for both full-list and filtered requests.
-  let query = supabase
-    .from('incidents')
-    .select('*')
-    .order('incident_date', { ascending: false })
-    .order('created_at', { ascending: false });
+  try {
+    const params: string[] = [];
+    let sql = `
+      SELECT *
+      FROM incidents
+    `;
 
-  if (category) {
-    query = query.eq('category', category.toLowerCase());
+    if (category) {
+      if (!validCategories.includes(category as (typeof validCategories)[number])) {
+        return NextResponse.json({ error: 'Invalid category' }, { status: 400 });
+      }
+
+      params.push(category);
+      sql += ' WHERE category = $1';
+    }
+
+    sql += ' ORDER BY incident_date DESC, created_at DESC';
+
+    const { rows } = await query(sql, params);
+
+    return NextResponse.json({ incidents: rows }, { status: 200 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Database query failed';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const { data, error } = await query;
-
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
-  return NextResponse.json({ incidents: data }, { status: 200 });
 }
 
 export async function POST(request: Request) {
   const body = (await request.json()) as IncidentRequestBody;
 
-  // Normalize incoming values before validating against the database rules.
   const category = body.category?.trim().toLowerCase();
   const title = body.title?.trim();
   const description = body.description?.trim();
@@ -81,25 +87,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Incident date is required' }, { status: 400 });
   }
 
-  // Translate the frontend's camelCase payload to the table's snake_case columns.
-  const { data, error } = await supabase
-    .from('incidents')
-    .insert({
-      category,
-      title,
-      description,
-      location,
-      created_by: createdBy,
-      urgency,
-      status,
-      incident_date: incidentDate,
-    })
-    .select()
-    .single();
+  try {
+    const { rows } = await query(
+      `
+        INSERT INTO incidents (
+          category,
+          title,
+          description,
+          location,
+          created_by,
+          urgency,
+          status,
+          incident_date
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING *
+      `,
+      [category, title, description, location, createdBy, urgency, status, incidentDate],
+    );
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ incident: rows[0] }, { status: 201 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Database insert failed';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  return NextResponse.json({ incident: data }, { status: 201 });
 }
