@@ -1,23 +1,27 @@
 # Incident Ledger
 
-A web application for tracking incidents, documenting actions taken, and exporting clean reports with signatures. Designed for multi-category incident management across software development, building management, custodial work, and healthcare environments.
+A full-stack incident tracking application for documenting incidents, recording actions taken, managing status changes, and supporting cleaner operational handoffs.
 
 ## About
 
-Incident Ledger helps teams maintain accountability and transparency in incident response. Log incidents with details, record troubleshooting steps and results, track status changes, and generate professional reports for audits, handoffs, and post-mortems.
+Incident Ledger helps teams maintain accountability and transparency during incident response. The app supports structured incident logging, timestamps, status tracking, and reporting-oriented documentation across software development, building management, custodial work, and healthcare environments.
 
 ## Tech Stack
 
-- **Framework**: Next.js 16.1.4
-- **UI Library**: React 19.2.3
-- **Styling**: Tailwind CSS 4
-- **Language**: TypeScript 5
-- **Node**: 18+ (recommended)
+- **Framework**: Next.js
+- **UI Library**: React
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+- **Runtime**: Node.js
+- **Database**: PostgreSQL
+- **API Style**: Next.js API routes / REST-style endpoints
 
 ## Requirements
 
 - Node.js 18 or higher
 - npm, yarn, pnpm, or bun package manager
+- PostgreSQL database
+- `DATABASE_URL` environment variable
 
 ## Getting Started
 
@@ -32,12 +36,17 @@ cd Incident-Ledger
 npm install
 ```
 
-3. Run the development server:
+3. Configure the database connection:
+```bash
+DATABASE_URL="postgresql://username:password@localhost:5432/incident_ledger"
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Available Scripts
 
@@ -48,14 +57,14 @@ npm run dev
 
 ## Features
 
-- Multi-category incident tracking (software, building, custodial, healthcare)
+- Multi-category incident tracking for software, building, custodial, and healthcare workflows
+- PostgreSQL-backed incident records
 - Comprehensive incident logging with timestamps and status tracking
 - Action and result documentation
-- Status management (Open, Investigating, Resolved)
-- Demo incident data for exploration
-- Responsive UI with navigation menu
+- Status management: Open, Investigating, Resolved
+- Responsive UI with navigation patterns
 - Contact form for feature requests
 
 ## Project Status
 
-This is a beta project in active development. Authentication and report export functionality are coming soon.
+This is a beta project in active development. The current focus is strengthening the PostgreSQL-backed workflow, improving reporting features, and refining the user experience.
